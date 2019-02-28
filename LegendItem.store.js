@@ -1,19 +1,46 @@
-import _extends from 'babel-runtime/helpers/extends';
-import TextField from 'material-ui/TextField/TextField';
-import { Observable } from 'rxjs';
-import { getInstance, config } from 'd2';
-import camelCaseToUnderscores from 'd2-utilizr/lib/camelCaseToUnderscores';
-import ColorPicker from './ColorPicker.component';
+'use strict';
 
-import { Store } from '@dhis2/d2-ui-core';
-import { Validators } from '@dhis2/d2-ui-forms';
-import { mapProps } from '@dhis2/d2-ui-core';
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.legendItemStore$ = exports.legendItemStore = undefined;
 
-config.i18n.strings.add('required');
-config.i18n.strings.add('should_be_lower_than_end_value');
-config.i18n.strings.add('should_be_higher_than_start_value');
+var _extends2 = require('babel-runtime/helpers/extends');
 
-export var legendItemStore = Store.create();
+var _extends3 = _interopRequireDefault(_extends2);
+
+exports.openEditDialogFor = openEditDialogFor;
+exports.onFieldChange = onFieldChange;
+exports.onFormStatusChange = onFormStatusChange;
+exports.setDialogStateTo = setDialogStateTo;
+
+var _TextField = require('material-ui/TextField/TextField');
+
+var _TextField2 = _interopRequireDefault(_TextField);
+
+var _rxjs = require('rxjs');
+
+var _d = require('d2');
+
+var _camelCaseToUnderscores = require('d2-utilizr/lib/camelCaseToUnderscores');
+
+var _camelCaseToUnderscores2 = _interopRequireDefault(_camelCaseToUnderscores);
+
+var _ColorPicker = require('./ColorPicker.component');
+
+var _ColorPicker2 = _interopRequireDefault(_ColorPicker);
+
+var _d2UiCore = require('@dhis2/d2-ui-core');
+
+var _d2UiForms = require('@dhis2/d2-ui-forms');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_d.config.i18n.strings.add('required');
+_d.config.i18n.strings.add('should_be_lower_than_end_value');
+_d.config.i18n.strings.add('should_be_higher_than_start_value');
+
+var legendItemStore = exports.legendItemStore = _d2UiCore.Store.create();
 
 // FormBuilder currently requires an event to be passed for fields
 function createFakeEvent(color) {
@@ -24,7 +51,7 @@ function createFakeEvent(color) {
     };
 }
 
-export function openEditDialogFor(model) {
+function openEditDialogFor(model) {
     legendItemStore.setState({
         model: model,
         open: true
@@ -33,14 +60,14 @@ export function openEditDialogFor(model) {
 
 var formFieldsConfigs = [{
     name: 'name',
-    component: TextField,
+    component: _TextField2.default,
     validators: [{
-        validator: Validators.isRequired,
-        message: Validators.isRequired.message
+        validator: _d2UiForms.Validators.isRequired,
+        message: _d2UiForms.Validators.isRequired.message
     }]
 }, {
     name: 'startValue',
-    component: TextField,
+    component: _TextField2.default,
     props: {
         type: 'number'
     },
@@ -52,7 +79,7 @@ var formFieldsConfigs = [{
     }]
 }, {
     name: 'endValue',
-    component: TextField,
+    component: _TextField2.default,
     props: {
         type: 'number'
     },
@@ -64,50 +91,50 @@ var formFieldsConfigs = [{
     }]
 }, { // Defined in data-table/data-value/Color.component.js
     name: 'color',
-    component: mapProps(function (props) {
+    component: (0, _d2UiCore.mapProps)(function (props) {
         return {
             color: props.value,
             onChange: function onChange(color) {
                 props.onChange(createFakeEvent(color));
             }
         };
-    }, ColorPicker)
+    }, _ColorPicker2.default)
 }];
 
 // Called when a field is changed
-export function onFieldChange(fieldName, value) {
+function onFieldChange(fieldName, value) {
     var model = legendItemStore.getState().model;
 
     model[fieldName] = value;
 
-    legendItemStore.setState(_extends({}, legendItemStore.getState(), {
+    legendItemStore.setState((0, _extends3.default)({}, legendItemStore.getState(), {
         model: model
     }));
 }
 
-export function onFormStatusChange(_ref) {
+function onFormStatusChange(_ref) {
     var valid = _ref.valid;
 
-    legendItemStore.setState(_extends({}, legendItemStore.getState(), {
+    legendItemStore.setState((0, _extends3.default)({}, legendItemStore.getState(), {
         isValid: valid
     }));
 }
 
-export function setDialogStateTo(open) {
-    legendItemStore.setState(_extends({}, legendItemStore.getState(), {
+function setDialogStateTo(open) {
+    legendItemStore.setState((0, _extends3.default)({}, legendItemStore.getState(), {
         open: open
     }));
 }
 
-export var legendItemStore$ = Observable.combineLatest(legendItemStore, Observable.of(formFieldsConfigs), Observable.fromPromise(getInstance()), function (state, fieldConfigs, d2) {
-    return _extends({}, state, {
+var legendItemStore$ = exports.legendItemStore$ = _rxjs.Observable.combineLatest(legendItemStore, _rxjs.Observable.of(formFieldsConfigs), _rxjs.Observable.fromPromise((0, _d.getInstance)()), function (state, fieldConfigs, d2) {
+    return (0, _extends3.default)({}, state, {
         fieldConfigs: fieldConfigs.map(function (fieldConfig) {
-            return _extends({}, fieldConfig, {
-                props: _extends({}, fieldConfig.props, {
-                    floatingLabelText: d2.i18n.getTranslation(camelCaseToUnderscores(fieldConfig.name))
+            return (0, _extends3.default)({}, fieldConfig, {
+                props: (0, _extends3.default)({}, fieldConfig.props, {
+                    floatingLabelText: d2.i18n.getTranslation((0, _camelCaseToUnderscores2.default)(fieldConfig.name))
                 }),
                 validators: (fieldConfig.validators || []).map(function (validator) {
-                    return _extends({}, validator, {
+                    return (0, _extends3.default)({}, validator, {
                         message: d2.i18n.getTranslation(validator.message)
                     });
                 })
@@ -116,9 +143,9 @@ export var legendItemStore$ = Observable.combineLatest(legendItemStore, Observab
     });
 }) // Return a combined object (will return an array if we don't pass it)
 .map(function (state) {
-    return _extends({}, state, {
+    return (0, _extends3.default)({}, state, {
         fieldConfigs: state.fieldConfigs.map(function (fieldConfig) {
-            return _extends({}, fieldConfig, {
+            return (0, _extends3.default)({}, fieldConfig, {
                 value: state.model[fieldConfig.name]
             });
         })

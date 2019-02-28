@@ -1,8 +1,16 @@
-import { Action } from '@dhis2/d2-ui-core';
-import { setDialogStateTo } from './LegendItem.store';
+'use strict';
 
-export var setDialogStateToAction = Action.create('setDialogStateToAction'); // name in debug
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.setDialogStateToAction = undefined;
+
+var _d2UiCore = require('@dhis2/d2-ui-core');
+
+var _LegendItem = require('./LegendItem.store');
+
+var setDialogStateToAction = exports.setDialogStateToAction = _d2UiCore.Action.create('setDialogStateToAction'); // name in debug
 
 setDialogStateToAction.subscribe(function (action) {
-  return setDialogStateTo(action.data);
+  return (0, _LegendItem.setDialogStateTo)(action.data);
 });

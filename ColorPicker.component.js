@@ -1,25 +1,54 @@
-import _Object$getPrototypeOf from 'babel-runtime/core-js/object/get-prototype-of';
-import _classCallCheck from 'babel-runtime/helpers/classCallCheck';
-import _createClass from 'babel-runtime/helpers/createClass';
-import _possibleConstructorReturn from 'babel-runtime/helpers/possibleConstructorReturn';
-import _inherits from 'babel-runtime/helpers/inherits';
-import React, { Component } from 'react';
-import ChromePicker from 'react-color/lib/components/chrome/Chrome';
-import { hcl } from 'd3-color';
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
+
+var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = require('babel-runtime/helpers/createClass');
+
+var _createClass3 = _interopRequireDefault(_createClass2);
+
+var _possibleConstructorReturn2 = require('babel-runtime/helpers/possibleConstructorReturn');
+
+var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+var _inherits2 = require('babel-runtime/helpers/inherits');
+
+var _inherits3 = _interopRequireDefault(_inherits2);
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Chrome = require('react-color/lib/components/chrome/Chrome');
+
+var _Chrome2 = _interopRequireDefault(_Chrome);
+
+var _d3Color = require('d3-color');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ColorPicker = function (_Component) {
-    _inherits(ColorPicker, _Component);
+    (0, _inherits3.default)(ColorPicker, _Component);
 
     function ColorPicker() {
         var _ref;
 
-        _classCallCheck(this, ColorPicker);
+        (0, _classCallCheck3.default)(this, ColorPicker);
 
         for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
             args[_key] = arguments[_key];
         }
 
-        var _this = _possibleConstructorReturn(this, (_ref = ColorPicker.__proto__ || _Object$getPrototypeOf(ColorPicker)).call.apply(_ref, [this].concat(args)));
+        var _this = (0, _possibleConstructorReturn3.default)(this, (_ref = ColorPicker.__proto__ || (0, _getPrototypeOf2.default)(ColorPicker)).call.apply(_ref, [this].concat(args)));
 
         _this.handleOpen = function () {
             _this.setState({ open: true });
@@ -43,7 +72,7 @@ var ColorPicker = function (_Component) {
         return _this;
     }
 
-    _createClass(ColorPicker, [{
+    (0, _createClass3.default)(ColorPicker, [{
         key: 'render',
         value: function render() {
             var color = this.state.color;
@@ -55,7 +84,7 @@ var ColorPicker = function (_Component) {
                 },
                 color: {
                     backgroundColor: color,
-                    color: hcl(color).l < 70 ? '#fff' : '#000',
+                    color: (0, _d3Color.hcl)(color).l < 70 ? '#fff' : '#000',
                     textAlign: 'center',
                     position: 'relative',
                     width: 90,
@@ -79,29 +108,28 @@ var ColorPicker = function (_Component) {
                 }
             };
 
-            return React.createElement(
+            return _react2.default.createElement(
                 'div',
                 { style: styles.wrapper },
-                React.createElement(
+                _react2.default.createElement(
                     'div',
                     { style: styles.color, onClick: this.handleOpen },
                     color
                 ),
-                this.state.open ? React.createElement(
+                this.state.open ? _react2.default.createElement(
                     'div',
                     { is: 'popover' },
-                    React.createElement('div', { style: styles.cover, onClick: this.handleClose }),
-                    React.createElement(
+                    _react2.default.createElement('div', { style: styles.cover, onClick: this.handleClose }),
+                    _react2.default.createElement(
                         'div',
                         { style: styles.picker },
-                        React.createElement(ChromePicker, { color: this.state.color, onChange: this.handleChange })
+                        _react2.default.createElement(_Chrome2.default, { color: this.state.color, onChange: this.handleChange })
                     )
                 ) : null
             );
         }
     }]);
-
     return ColorPicker;
-}(Component);
+}(_react.Component);
 
-export default ColorPicker;
+exports.default = ColorPicker;
