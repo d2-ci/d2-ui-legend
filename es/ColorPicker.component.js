@@ -73,9 +73,11 @@ var ColorPicker = function (_Component) {
                     left: 0
                 },
                 picker: {
-                    position: 'absolute',
-                    top: -207,
-                    left: 120
+                    position: 'fixed',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    zIndex: 1000
                 }
             };
 
@@ -84,19 +86,32 @@ var ColorPicker = function (_Component) {
                 { style: styles.wrapper },
                 React.createElement(
                     'div',
-                    { style: styles.color, onClick: this.handleOpen },
+                    {
+                        style: styles.color,
+                        role: 'button',
+                        onClick: this.handleOpen,
+                        tabIndex: 0
+                    },
                     color
                 ),
-                this.state.open ? React.createElement(
+                this.state.open && React.createElement(
                     'div',
-                    { is: 'popover' },
-                    React.createElement('div', { style: styles.cover, onClick: this.handleClose }),
+                    null,
+                    React.createElement('div', {
+                        style: styles.cover,
+                        role: 'button',
+                        onClick: this.handleClose,
+                        tabIndex: 0
+                    }),
                     React.createElement(
                         'div',
                         { style: styles.picker },
-                        React.createElement(ChromePicker, { color: this.state.color, onChange: this.handleChange })
+                        React.createElement(ChromePicker, {
+                            color: this.state.color,
+                            onChange: this.handleChange
+                        })
                     )
-                ) : null
+                )
             );
         }
     }]);
