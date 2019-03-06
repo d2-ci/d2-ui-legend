@@ -102,9 +102,11 @@ var ColorPicker = function (_Component) {
                     left: 0
                 },
                 picker: {
-                    position: 'absolute',
-                    top: -207,
-                    left: 120
+                    position: 'fixed',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    zIndex: 1000
                 }
             };
 
@@ -113,19 +115,32 @@ var ColorPicker = function (_Component) {
                 { style: styles.wrapper },
                 _react2.default.createElement(
                     'div',
-                    { style: styles.color, onClick: this.handleOpen },
+                    {
+                        style: styles.color,
+                        role: 'button',
+                        onClick: this.handleOpen,
+                        tabIndex: 0
+                    },
                     color
                 ),
-                this.state.open ? _react2.default.createElement(
+                this.state.open && _react2.default.createElement(
                     'div',
-                    { is: 'popover' },
-                    _react2.default.createElement('div', { style: styles.cover, onClick: this.handleClose }),
+                    null,
+                    _react2.default.createElement('div', {
+                        style: styles.cover,
+                        role: 'button',
+                        onClick: this.handleClose,
+                        tabIndex: 0
+                    }),
                     _react2.default.createElement(
                         'div',
                         { style: styles.picker },
-                        _react2.default.createElement(_Chrome2.default, { color: this.state.color, onChange: this.handleChange })
+                        _react2.default.createElement(_Chrome2.default, {
+                            color: this.state.color,
+                            onChange: this.handleChange
+                        })
                     )
-                ) : null
+                )
             );
         }
     }]);
