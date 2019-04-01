@@ -1,3 +1,4 @@
+import _toConsumableArray from 'babel-runtime/helpers/toConsumableArray';
 import _Object$getPrototypeOf from 'babel-runtime/core-js/object/get-prototype-of';
 import _classCallCheck from 'babel-runtime/helpers/classCallCheck';
 import _createClass from 'babel-runtime/helpers/createClass';
@@ -87,13 +88,27 @@ var Legend = function (_Component) {
             _this.props.onItemsChange(newItems);
         };
 
-        _this.updateItem = function (newItems) {
-            var modelToUpdate = legendItemStore.getState() && legendItemStore.getState().model;
-            var isNewLegendItem = newItems.every(function (model) {
-                return model !== modelToUpdate;
-            });
+        _this.updateItem = function (existingItems) {
+            var updatedItems = existingItems;
+            var currentItem = legendItemStore.getState() && legendItemStore.getState().model;
 
-            return _this.props.onItemsChange([].concat(newItems, isNewLegendItem ? modelToUpdate : []));
+            // Only update if we got a valid model from getState
+            if (currentItem) {
+                updatedItems = [].concat(_toConsumableArray(existingItems));
+                var idx = updatedItems.findIndex(function (item) {
+                    return item.id === currentItem.id;
+                });
+
+                if (idx === -1) {
+                    // Add item if it's a new item
+                    updatedItems.push(currentItem);
+                } else {
+                    // Replace old item with changed item
+                    updatedItems[idx] = currentItem;
+                }
+            }
+
+            return _this.props.onItemsChange(updatedItems);
         };
 
         _this.validateForm = function () {

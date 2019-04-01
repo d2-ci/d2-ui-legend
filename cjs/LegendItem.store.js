@@ -103,7 +103,8 @@ var formFieldsConfigs = [{
 
 // Called when a field is changed
 function onFieldChange(fieldName, value) {
-    var model = legendItemStore.getState().model;
+    // Shallow clone model, so the assignment below doesn't mutate the original
+    var model = (0, _extends3.default)({}, legendItemStore.getState().model);
 
     model[fieldName] = value;
 
