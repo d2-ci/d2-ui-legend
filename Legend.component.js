@@ -4,6 +4,10 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _toConsumableArray2 = require('babel-runtime/helpers/toConsumableArray');
+
+var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
+
 var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
 
 var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
@@ -138,13 +142,27 @@ var Legend = function (_Component) {
             _this.props.onItemsChange(newItems);
         };
 
-        _this.updateItem = function (newItems) {
-            var modelToUpdate = _LegendItem.legendItemStore.getState() && _LegendItem.legendItemStore.getState().model;
-            var isNewLegendItem = newItems.every(function (model) {
-                return model !== modelToUpdate;
-            });
+        _this.updateItem = function (existingItems) {
+            var updatedItems = existingItems;
+            var currentItem = _LegendItem.legendItemStore.getState() && _LegendItem.legendItemStore.getState().model;
 
-            return _this.props.onItemsChange([].concat(newItems, isNewLegendItem ? modelToUpdate : []));
+            // Only update if we got a valid model from getState
+            if (currentItem) {
+                updatedItems = [].concat((0, _toConsumableArray3.default)(existingItems));
+                var idx = updatedItems.findIndex(function (item) {
+                    return item.id === currentItem.id;
+                });
+
+                if (idx === -1) {
+                    // Add item if it's a new item
+                    updatedItems.push(currentItem);
+                } else {
+                    // Replace old item with changed item
+                    updatedItems[idx] = currentItem;
+                }
+            }
+
+            return _this.props.onItemsChange(updatedItems);
         };
 
         _this.validateForm = function () {
