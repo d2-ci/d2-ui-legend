@@ -106,7 +106,7 @@ var LegendItems = function (_Component) {
             };
 
             var orderedItems = props.items.sort(function (left, right) {
-                return Number(left.startValue) > Number(right.startValue);
+                return Number(left.startValue) - Number(right.startValue);
             });
 
             return _react2.default.createElement(
