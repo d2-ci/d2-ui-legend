@@ -1,7 +1,23 @@
-import _extends from 'babel-runtime/helpers/extends';
-export { ColorScale as default };
-import React from 'react';
-import colorbrewer from './colorbrewer';
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = undefined;
+
+var _extends2 = require('babel-runtime/helpers/extends');
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _colorbrewer = require('./colorbrewer');
+
+var _colorbrewer2 = _interopRequireDefault(_colorbrewer);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // Returns one color scale based on a code and number of classes
 function ColorScale(_ref) {
@@ -10,10 +26,10 @@ function ColorScale(_ref) {
         style = _ref.style,
         _onClick = _ref.onClick;
 
-    var colors = colorbrewer[scale][classes];
+    var colors = _colorbrewer2.default[scale][classes];
 
     var styles = {
-        scale: _extends({
+        scale: (0, _extends3.default)({
             marginRight: 30,
             paddingLeft: 0,
             height: 36,
@@ -32,10 +48,10 @@ function ColorScale(_ref) {
             height: '100%'
         };
 
-        return React.createElement('li', { key: index, style: styles });
+        return _react2.default.createElement('li', { key: index, style: styles });
     });
 
-    return React.createElement(
+    return _react2.default.createElement(
         'ul',
         { style: styles.scale, onClick: function onClick(event) {
                 return _onClick(event, scale);
@@ -43,3 +59,4 @@ function ColorScale(_ref) {
         items
     );
 }
+exports.default = ColorScale;

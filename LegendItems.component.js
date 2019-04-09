@@ -1,38 +1,80 @@
-import _Object$getPrototypeOf from 'babel-runtime/core-js/object/get-prototype-of';
-import _classCallCheck from 'babel-runtime/helpers/classCallCheck';
-import _createClass from 'babel-runtime/helpers/createClass';
-import _possibleConstructorReturn from 'babel-runtime/helpers/possibleConstructorReturn';
-import _inherits from 'babel-runtime/helpers/inherits';
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { generateUid } from 'd2/uid';
-import FloatingActionButton from 'material-ui/FloatingActionButton/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
-import Table from '@dhis2/d2-ui-table';
-import EditLegendItem from './EditLegendItem.component';
-import { openEditDialogFor } from './LegendItem.store';
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
+
+var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = require('babel-runtime/helpers/createClass');
+
+var _createClass3 = _interopRequireDefault(_createClass2);
+
+var _possibleConstructorReturn2 = require('babel-runtime/helpers/possibleConstructorReturn');
+
+var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+var _inherits2 = require('babel-runtime/helpers/inherits');
+
+var _inherits3 = _interopRequireDefault(_inherits2);
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _uid = require('d2/uid');
+
+var _FloatingActionButton = require('material-ui/FloatingActionButton/FloatingActionButton');
+
+var _FloatingActionButton2 = _interopRequireDefault(_FloatingActionButton);
+
+var _add = require('material-ui/svg-icons/content/add');
+
+var _add2 = _interopRequireDefault(_add);
+
+var _d2UiTable = require('@dhis2/d2-ui-table');
+
+var _d2UiTable2 = _interopRequireDefault(_d2UiTable);
+
+var _EditLegendItem = require('./EditLegendItem.component');
+
+var _EditLegendItem2 = _interopRequireDefault(_EditLegendItem);
+
+var _LegendItem = require('./LegendItem.store');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var LegendItems = function (_Component) {
-    _inherits(LegendItems, _Component);
+    (0, _inherits3.default)(LegendItems, _Component);
 
     function LegendItems() {
         var _ref;
 
-        _classCallCheck(this, LegendItems);
+        (0, _classCallCheck3.default)(this, LegendItems);
 
         for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
             args[_key] = arguments[_key];
         }
 
-        var _this = _possibleConstructorReturn(this, (_ref = LegendItems.__proto__ || _Object$getPrototypeOf(LegendItems)).call.apply(_ref, [this].concat(args)));
+        var _this = (0, _possibleConstructorReturn3.default)(this, (_ref = LegendItems.__proto__ || (0, _getPrototypeOf2.default)(LegendItems)).call.apply(_ref, [this].concat(args)));
 
         _this.onAddLegendItem = function () {
             var legend = {
-                id: generateUid(),
+                id: (0, _uid.generateUid)(),
                 color: '#FFA500' // Orange is default
             };
 
-            openEditDialogFor(legend);
+            (0, _LegendItem.openEditDialogFor)(legend);
         };
 
         _this.state = {
@@ -41,13 +83,13 @@ var LegendItems = function (_Component) {
         return _this;
     }
 
-    _createClass(LegendItems, [{
+    (0, _createClass3.default)(LegendItems, [{
         key: 'render',
         value: function render() {
             var props = this.props;
 
             var actions = {
-                edit: openEditDialogFor,
+                edit: _LegendItem.openEditDialogFor,
                 delete: props.deleteItem
             };
 
@@ -64,43 +106,42 @@ var LegendItems = function (_Component) {
             };
 
             var orderedItems = props.items.sort(function (left, right) {
-                return Number(left.startValue) > Number(right.startValue);
+                return Number(left.startValue) - Number(right.startValue);
             });
 
-            return React.createElement(
+            return _react2.default.createElement(
                 'div',
                 { style: styles.component },
-                React.createElement(
-                    FloatingActionButton,
+                _react2.default.createElement(
+                    _FloatingActionButton2.default,
                     { style: styles.button, onClick: this.onAddLegendItem },
-                    React.createElement(ContentAdd, null)
+                    _react2.default.createElement(_add2.default, null)
                 ),
-                React.createElement(Table, {
+                _react2.default.createElement(_d2UiTable2.default, {
                     rows: orderedItems,
                     columns: ['name', 'startValue', 'endValue', 'color'],
                     primaryAction: function primaryAction() {},
                     contextMenuActions: actions
                 }),
-                React.createElement(EditLegendItem, { onItemUpdate: function onItemUpdate() {
+                _react2.default.createElement(_EditLegendItem2.default, { onItemUpdate: function onItemUpdate() {
                         return props.updateItem(props.items);
                     } })
             );
         }
     }]);
-
     return LegendItems;
-}(Component);
+}(_react.Component);
 
 LegendItems.contextTypes = {
-    d2: PropTypes.object
+    d2: _propTypes2.default.object
 };
 
 LegendItems.propTypes = {
-    items: PropTypes.array.isRequired
+    items: _propTypes2.default.array.isRequired
 };
 
 LegendItems.defaultProps = {
     items: []
 };
 
-export default LegendItems;
+exports.default = LegendItems;

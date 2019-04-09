@@ -1,47 +1,102 @@
-import _Object$getPrototypeOf from 'babel-runtime/core-js/object/get-prototype-of';
-import _classCallCheck from 'babel-runtime/helpers/classCallCheck';
-import _createClass from 'babel-runtime/helpers/createClass';
-import _possibleConstructorReturn from 'babel-runtime/helpers/possibleConstructorReturn';
-import _inherits from 'babel-runtime/helpers/inherits';
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import TextField from 'material-ui/TextField/TextField';
-import RaisedButton from 'material-ui/RaisedButton/RaisedButton';
-import FlatButton from 'material-ui/FlatButton/FlatButton';
-import Dialog from 'material-ui/Dialog/Dialog';
-import { scaleLinear } from 'd3-scale';
-import { precisionFixed } from 'd3-format';
-import { config } from 'd2';
-import { generateUid } from 'd2/uid';
-import ColorScaleSelect from './ColorScaleSelect.component';
-import LegendItems from './LegendItems.component';
-import { legendItemStore } from './LegendItem.store';
-import { Row } from '@dhis2/d2-ui-core';
-import { Column } from '@dhis2/d2-ui-core';
+'use strict';
 
-config.i18n.strings.add('start_value');
-config.i18n.strings.add('end_value');
-config.i18n.strings.add('required');
-config.i18n.strings.add('cancel');
-config.i18n.strings.add('proceed');
-config.i18n.strings.add('needs_to_be_bigger_than_start_value');
-config.i18n.strings.add('are_you_sure');
-config.i18n.strings.add('this_will_replace_the_current_legend_items');
-config.i18n.strings.add('create_legend_items');
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _toConsumableArray2 = require('babel-runtime/helpers/toConsumableArray');
+
+var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
+
+var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
+
+var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = require('babel-runtime/helpers/createClass');
+
+var _createClass3 = _interopRequireDefault(_createClass2);
+
+var _possibleConstructorReturn2 = require('babel-runtime/helpers/possibleConstructorReturn');
+
+var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+var _inherits2 = require('babel-runtime/helpers/inherits');
+
+var _inherits3 = _interopRequireDefault(_inherits2);
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _TextField = require('material-ui/TextField/TextField');
+
+var _TextField2 = _interopRequireDefault(_TextField);
+
+var _RaisedButton = require('material-ui/RaisedButton/RaisedButton');
+
+var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
+
+var _FlatButton = require('material-ui/FlatButton/FlatButton');
+
+var _FlatButton2 = _interopRequireDefault(_FlatButton);
+
+var _Dialog = require('material-ui/Dialog/Dialog');
+
+var _Dialog2 = _interopRequireDefault(_Dialog);
+
+var _d3Scale = require('d3-scale');
+
+var _d3Format = require('d3-format');
+
+var _d = require('d2');
+
+var _uid = require('d2/uid');
+
+var _ColorScaleSelect = require('./ColorScaleSelect.component');
+
+var _ColorScaleSelect2 = _interopRequireDefault(_ColorScaleSelect);
+
+var _LegendItems = require('./LegendItems.component');
+
+var _LegendItems2 = _interopRequireDefault(_LegendItems);
+
+var _LegendItem = require('./LegendItem.store');
+
+var _d2UiCore = require('@dhis2/d2-ui-core');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_d.config.i18n.strings.add('start_value');
+_d.config.i18n.strings.add('end_value');
+_d.config.i18n.strings.add('required');
+_d.config.i18n.strings.add('cancel');
+_d.config.i18n.strings.add('proceed');
+_d.config.i18n.strings.add('needs_to_be_bigger_than_start_value');
+_d.config.i18n.strings.add('are_you_sure');
+_d.config.i18n.strings.add('this_will_replace_the_current_legend_items');
+_d.config.i18n.strings.add('create_legend_items');
 
 var Legend = function (_Component) {
-    _inherits(Legend, _Component);
+    (0, _inherits3.default)(Legend, _Component);
 
     function Legend() {
         var _ref;
 
-        _classCallCheck(this, Legend);
+        (0, _classCallCheck3.default)(this, Legend);
 
         for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
             args[_key] = arguments[_key];
         }
 
-        var _this = _possibleConstructorReturn(this, (_ref = Legend.__proto__ || _Object$getPrototypeOf(Legend)).call.apply(_ref, [this].concat(args)));
+        var _this = (0, _possibleConstructorReturn3.default)(this, (_ref = Legend.__proto__ || (0, _getPrototypeOf2.default)(Legend)).call.apply(_ref, [this].concat(args)));
 
         _this.onStartValueChange = function (event) {
             _this.setState({ startValue: event.target.value }, _this.validateForm);
@@ -61,14 +116,14 @@ var Legend = function (_Component) {
                 endValue = _this$state.endValue,
                 colorScheme = _this$state.colorScheme;
 
-            var scale = scaleLinear().domain([startValue, endValue]).rangeRound([0, colorScheme.length]);
+            var scale = (0, _d3Scale.scaleLinear)().domain([startValue, endValue]).rangeRound([0, colorScheme.length]);
             var step = (endValue - startValue) / colorScheme.length;
-            var precision = precisionFixed(step); // https://github.com/d3/d3-format#precisionFixed
+            var precision = (0, _d3Format.precisionFixed)(step); // https://github.com/d3/d3-format#precisionFixed
 
             var items = colorScheme.map(function (color, index) {
                 var legend = {};
 
-                legend.id = generateUid();
+                legend.id = (0, _uid.generateUid)();
                 legend.startValue = scale.invert(index).toFixed(precision);
                 legend.endValue = scale.invert(index + 1).toFixed(precision);
                 legend.color = color;
@@ -87,13 +142,27 @@ var Legend = function (_Component) {
             _this.props.onItemsChange(newItems);
         };
 
-        _this.updateItem = function (newItems) {
-            var modelToUpdate = legendItemStore.getState() && legendItemStore.getState().model;
-            var isNewLegendItem = newItems.every(function (model) {
-                return model !== modelToUpdate;
-            });
+        _this.updateItem = function (existingItems) {
+            var updatedItems = existingItems;
+            var currentItem = _LegendItem.legendItemStore.getState() && _LegendItem.legendItemStore.getState().model;
 
-            return _this.props.onItemsChange([].concat(newItems, isNewLegendItem ? modelToUpdate : []));
+            // Only update if we got a valid model from getState
+            if (currentItem) {
+                updatedItems = [].concat((0, _toConsumableArray3.default)(existingItems));
+                var idx = updatedItems.findIndex(function (item) {
+                    return item.id === currentItem.id;
+                });
+
+                if (idx === -1) {
+                    // Add item if it's a new item
+                    updatedItems.push(currentItem);
+                } else {
+                    // Replace old item with changed item
+                    updatedItems[idx] = currentItem;
+                }
+            }
+
+            return _this.props.onItemsChange(updatedItems);
         };
 
         _this.validateForm = function () {
@@ -165,14 +234,14 @@ var Legend = function (_Component) {
     // Display warning that current legend items will be deleted
 
 
-    _createClass(Legend, [{
+    (0, _createClass3.default)(Legend, [{
         key: 'render',
         value: function render() {
-            var actions = [React.createElement(FlatButton, {
+            var actions = [_react2.default.createElement(_FlatButton2.default, {
                 label: this.i18n.getTranslation('cancel'),
                 secondary: true,
                 onClick: this.handleClose
-            }), React.createElement(FlatButton, {
+            }), _react2.default.createElement(_FlatButton2.default, {
                 label: this.i18n.getTranslation('proceed'),
                 primary: true,
                 onClick: this.handleClose
@@ -200,13 +269,13 @@ var Legend = function (_Component) {
                 colorScaleSelect: {}
             };
 
-            return React.createElement(
-                Column,
+            return _react2.default.createElement(
+                _d2UiCore.Column,
                 null,
-                React.createElement(
-                    Row,
+                _react2.default.createElement(
+                    _d2UiCore.Row,
                     { style: styles.legendGenerator },
-                    React.createElement(TextField, {
+                    _react2.default.createElement(_TextField2.default, {
                         type: 'number',
                         style: styles.textField,
                         floatingLabelText: this.i18n.getTranslation('start_value'),
@@ -215,7 +284,7 @@ var Legend = function (_Component) {
                         errorText: this.state.errorMessage.startValue,
                         errorStyle: styles.errorStyle
                     }),
-                    React.createElement(TextField, {
+                    _react2.default.createElement(_TextField2.default, {
                         type: 'number',
                         style: styles.textField,
                         floatingLabelText: this.i18n.getTranslation('end_value'),
@@ -224,24 +293,24 @@ var Legend = function (_Component) {
                         errorText: this.state.errorMessage.endValue,
                         errorStyle: styles.errorStyle
                     }),
-                    React.createElement(ColorScaleSelect, {
+                    _react2.default.createElement(_ColorScaleSelect2.default, {
                         style: styles.colorScaleSelect,
                         onChange: this.onColorScaleChange
                     }),
-                    React.createElement(RaisedButton, {
+                    _react2.default.createElement(_RaisedButton2.default, {
                         style: styles.button,
                         label: this.i18n.getTranslation('create_legend_items'),
                         onClick: this.displayWarning,
                         disabled: this.state.createLegendDisabled
                     })
                 ),
-                React.createElement(LegendItems, {
+                _react2.default.createElement(_LegendItems2.default, {
                     items: this.props.items,
                     updateItem: this.updateItem,
                     deleteItem: this.deleteItem
                 }),
-                React.createElement(
-                    Dialog,
+                _react2.default.createElement(
+                    _Dialog2.default,
                     {
                         title: this.i18n.getTranslation('are_you_sure'),
                         actions: actions,
@@ -255,16 +324,15 @@ var Legend = function (_Component) {
             );
         }
     }]);
-
     return Legend;
-}(Component);
+}(_react.Component);
 
 Legend.propTypes = {
-    items: PropTypes.array.isRequired
+    items: _propTypes2.default.array.isRequired
 };
 
 Legend.contextTypes = {
-    d2: PropTypes.object
+    d2: _propTypes2.default.object
 };
 
-export default Legend;
+exports.default = Legend;
