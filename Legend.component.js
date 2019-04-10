@@ -209,7 +209,11 @@ var Legend = function (_Component) {
             _this.setState({ warningDialogOpen: true });
         };
 
-        _this.handleClose = function () {
+        _this.handleCreateLegendsCancel = function () {
+            _this.setState({ warningDialogOpen: false });
+        };
+
+        _this.handleCreateLegendsConfirm = function () {
             _this.setState({ warningDialogOpen: false }, function () {
                 return _this.createLegendItems();
             } // Callback for after state update
@@ -240,11 +244,11 @@ var Legend = function (_Component) {
             var actions = [_react2.default.createElement(_FlatButton2.default, {
                 label: this.i18n.getTranslation('cancel'),
                 secondary: true,
-                onClick: this.handleClose
+                onClick: this.handleCreateLegendsCancel
             }), _react2.default.createElement(_FlatButton2.default, {
                 label: this.i18n.getTranslation('proceed'),
                 primary: true,
-                onClick: this.handleClose
+                onClick: this.handleCreateLegendsConfirm
             })];
 
             var styles = {
@@ -316,7 +320,7 @@ var Legend = function (_Component) {
                         actions: actions,
                         modal: false,
                         open: this.state.warningDialogOpen,
-                        onRequestClose: this.handleClose,
+                        onRequestClose: this.handleCreateLegendsCancel,
                         autoScrollBodyContent: true
                     },
                     this.i18n.getTranslation('this_will_replace_the_current_legend_items')
